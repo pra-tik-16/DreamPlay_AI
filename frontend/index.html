@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="DreamPlay AI - Transform your imagination into playable experiences with AI-powered game generation">
+    <meta name="keywords" content="AI, game development, no-code, game generator, DreamPlay">
+    <meta name="author" content="P2RSV">
+    
+    <title>DreamPlay AI - Dream It, Play It</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Lexend:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-logo">P2RSV</div>
+            <div class="splash-subtitle">Presents</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <!-- Navigation -->
+        <nav>
+            <div class="nav-logo">DreamPlay</div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                ☰
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#creator">Create</a></li>
+                <li><a href="#canvas">Play</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <!-- Video Placeholder (shown when video is not available) -->
+            <div class="hero-video-placeholder"></div>
+
+            <!-- Background Video -->
+            <video class="hero-video" autoplay muted loop playsinline poster="">
+                <!-- Replace these with your actual video files -->
+                <source src="assets/videos/game-montage.mp4" type="video/mp4">
+                <source src="assets/videos/game-montage.webm" type="video/webm">
+                <!-- Video not supported fallback is handled by placeholder -->
+            </video>
+
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    DREAM<span class="accent">PLAY</span>
+                </h1>
+                <p class="hero-subtitle">AI-Powered Game Intelligence</p>
+                <div class="hero-divider"></div>
+                <p class="hero-description">
+                    Transform your imagination into playable experiences. 
+                    Where artificial intelligence meets creative vision, 
+                    every idea becomes an interactive masterpiece.
+                </p>
+                <a href="#creator" class="cta-button">Begin Creation</a>
+            </div>
+        </section>
+
+        <!-- Creator Section -->
+        <section class="creator-section" id="creator">
+            <div class="section-header">
+                <div class="section-label">Intelligent Creation</div>
+                <h2 class="section-title">Craft Your Vision</h2>
+            </div>
+
+            <div class="prompt-creator">
+                <label class="prompt-label">Describe Your Game</label>
+                <input 
+                    type="text" 
+                    class="prompt-input" 
+                    id="promptInput"
+                    placeholder="A monster shooting game in a dark forest..."
+                >
+
+                <div class="suggestions">
+                    <div class="suggestion-card" data-prompt="Create an intense shooter game with alien invaders in outer space">
+                        <div class="suggestion-icon">🎯</div>
+                        <h3 class="suggestion-title">Shooter</h3>
+                        <p class="suggestion-text">Precision-based combat experiences with dynamic enemies</p>
+                    </div>
+                    <div class="suggestion-card" data-prompt="Build an endless runner game through a neon cyberpunk city">
+                        <div class="suggestion-icon">⚡</div>
+                        <h3 class="suggestion-title">Runner</h3>
+                        <p class="suggestion-text">High-speed endless adventures with obstacle challenges</p>
+                    </div>
+                    <div class="suggestion-card" data-prompt="Design a racing game on a desert canyon track at sunset">
+                        <div class="suggestion-icon">🏎️</div>
+                        <h3 class="suggestion-title">Racing</h3>
+                        <p class="suggestion-text">Velocity-driven competition across exotic landscapes</p>
+                    </div>
+                    <div class="suggestion-card" data-prompt="Make a space battle game defending against meteor storms">
+                        <div class="suggestion-icon">🚀</div>
+                        <h3 class="suggestion-title">Adventure</h3>
+                        <p class="suggestion-text">Exploration-focused journeys in immersive worlds</p>
+                    </div>
+                </div>
+
+                <button class="generate-button" id="generateBtn">
+                    Generate Experience
+                </button>
+            </div>
+        </section>
+
+        <!-- Canvas Section -->
+        <section class="canvas-section" id="canvas">
+            <div class="canvas-wrapper">
+                <div class="canvas-controls">
+                    <h2 class="canvas-title">Experience Viewport</h2>
+                    <div class="control-buttons">
+                        <button class="control-btn" id="playBtn">▶ Launch</button>
+                        <button class="control-btn" id="resetBtn">↻ Reset</button>
+                    </div>
+                </div>
+
+            <div id="gameCanvas"></div>
+
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Game Type</div>
+                        <div class="stat-value" id="statType">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Player Entity</div>
+                        <div class="stat-value" id="statPlayer">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Primary Object</div>
+                        <div class="stat-value" id="statObject">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Movement System</div>
+                        <div class="stat-value" id="statMovement">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Environment</div>
+                        <div class="stat-value" id="statEnvironment">—</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section (Optional) -->
+        <section class="about-section" id="about">
+            <div class="about-wrapper">
+                <div class="section-header">
+                    <div class="section-label">Technology</div>
+                    <h2 class="section-title">Powered by Intelligence</h2>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3 class="feature-title">Smart Generation</h3>
+                        <p class="feature-description">
+                            AI understands your intent and creates matching game logic automatically
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h3 class="feature-title">Dynamic Engine</h3>
+                        <p class="feature-description">
+                            Modular templates adapt to your game requirements in real-time
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3 class="feature-title">Auto Assets</h3>
+                        <p class="feature-description">
+                            Intelligent asset selection based on game theme and style
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Instant Play</h3>
+                        <p class="feature-description">
+                            Browser-based gameplay with zero setup or installation required
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Generating...</div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

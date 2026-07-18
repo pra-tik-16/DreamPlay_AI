@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shooter Game</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+
+    #canvasContainer {
+      width: 100vw; height: 100vh;
+      position: relative;
+    }
+
+    #shooterCanvas {
+      display: block; width: 100%; height: 100%;
+      background: #1a1a2e; outline: none; cursor: crosshair;
+    }
+
+    /* Loading overlay — shown while Pollinations generates assets */
+    #loadingScreen {
+      position: absolute; inset: 0;
+      background: #0a0a1a;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 10;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    #loadingScreen h2 {
+      font-size: 28px; color: #ffd700;
+      margin-bottom: 16px; letter-spacing: 2px;
+    }
+    #loadingStatus {
+      font-size: 14px; color: #aaa;
+      margin-bottom: 24px; min-height: 20px;
+    }
+    .loader-bar-wrap {
+      width: 300px; height: 8px;
+      background: #333; border-radius: 4px; overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, #ffd700, #ff6b00);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+    #loadingHint {
+      margin-top: 20px; font-size: 12px; color: #555;
+    }
+
+    #controls {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 4px 16px;
+      background: rgba(0,0,0,0.5);
+      color: #ffd700; font: 12px Arial, sans-serif;
+      text-align: center; pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="canvasContainer">
+    <canvas id="shooterCanvas" tabindex="0"></canvas>
+
+    <div id="loadingScreen">
+      <h2> GENERATING GAME</h2>
+      <div id="loadingStatus">Initializing...</div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loaderBar"></div>
+      </div>
+      <div id="loadingHint">Assets cached forever after</div>
+    </div>
+
+    <div id="controls">← → ↑ ↓ / WASD &nbsp;Move &nbsp;|&nbsp; SPACE / CLICK &nbsp;Shoot &nbsp;|&nbsp; R &nbsp;Restart</div>
+  </div>
+
+  <script src="loader.js"></script>
+  <script src="shooter_engine.js"></script>
+
+  <script>
+    // Loading screen helpers
+    const loadingScreen = document.getElementById("loadingScreen");
+    const loadingStatus = document.getElementById("loadingStatus");
+    const loaderBar     = document.getElementById("loaderBar");
+    let   loadProgress  = 0;
+
+    window.setLoadingStatus = function(msg, pct) {
+        if (loadingStatus) loadingStatus.textContent = msg;
+        if (loaderBar && pct !== undefined) loaderBar.style.width = pct + "%";
+    };
+    window.hideLoadingScreen = function() {
+        if (loadingScreen) {
+            loadingScreen.style.transition = "opacity 0.5s";
+            loadingScreen.style.opacity = "0";
+            setTimeout(() => loadingScreen.style.display = "none", 500);
+        }
+    };
+
+    window.addEventListener("message", function(event) {
+        if (!event.data || event.data.type !== "INIT_GAME") return;
+        console.log("MESSAGE RECEIVED", event.data.payload);
+        window.setLoadingStatus("Loading assets...", 10);
+        if (typeof window.startGame === "function") {
+            console.log("startGame → launching");
+            window.startGame(event.data.payload);
+        }
+    });
+  </script>
+</body>
+</html>
