@@ -12,6 +12,18 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, "..", "templates")
 app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path="")
 CORS(app)
 
+ENGINE_MAP = {
+    "shooter": "shooter",
+    "racing": "racing",
+    "runner": "runner",
+    "quiz": "quiz",
+    "puzzle": "puzzle",
+    "platformer": "platformer",
+    "strategy": "strategy",
+    "arcade": "arcade",
+    "survival": "survival"
+}
+
 @app.route("/generate_asset", methods=["POST"])
 def generate_asset():
 
@@ -53,19 +65,7 @@ def generate_game():
     prompt = data["prompt"]
     schema = classify_prompt(prompt)
 
-    engine_map = {
-        "shooter": "shooter",
-        "racing": "racing",
-        "runner": "runner",
-        "quiz": "quiz",
-        "puzzle": "puzzle",
-        "platformer": "platformer",
-        "strategy": "strategy",
-        "arcade": "arcade",
-        "survival": "survival"
-    }
-
-    engine_template = engine_map.get(schema.get("game_type"))
+    engine_template = ENGINE_MAP.get(schema.get("game_type"))
 
     if not engine_template:
         return jsonify({
