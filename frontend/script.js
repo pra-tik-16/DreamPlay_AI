@@ -398,6 +398,8 @@ if (resetBtn) {
         
         // Reset canvas
         if (gameCanvas) {
+            // Clear the canvas and show a placeholder message
+            gameCanvas.innerHTML = '';
             gameCanvas.textContent = 'AWAITING GENERATION';
         }
         
