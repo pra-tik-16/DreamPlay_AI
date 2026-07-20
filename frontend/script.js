@@ -180,7 +180,7 @@ suggestionCards.forEach(card => {
         const promptInput = document.getElementById('promptInput');
         
         if (promptInput && prompt) {
-            promptInput.value = prompt;
+            promptInput.value = prompt.trim();
             promptInput.focus();
             
             // Smooth scroll to input on mobile
@@ -189,7 +189,7 @@ suggestionCards.forEach(card => {
             }
         }
     });
-});
+});git 
 
 // ==================== GENERATE BUTTON ====================
 
