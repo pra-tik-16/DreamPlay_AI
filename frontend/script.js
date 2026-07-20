@@ -272,6 +272,8 @@ if (isPromptVague(prompt)) {
         if (loadingOverlay) {
             loadingOverlay.classList.add('active');
         }
+        generateBtn.disabled = true;
+        generateBtn.textContent = "Generating...";
         
         // Simulate AI generation (replace with actual API call)
        (async () => {
@@ -281,6 +283,9 @@ if (isPromptVague(prompt)) {
     if (loadingOverlay) {
         loadingOverlay.classList.remove('active');
     }
+    //Add Generate Experience button back by Ritesh
+    generateBtn.disabled = false;
+    generateBtn.textContent = "Generate Experience";
 
     if (!data) return;
 
